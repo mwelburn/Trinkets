@@ -1,4 +1,16 @@
 Trinkets::Application.routes.draw do
+  devise_for :users, :controllers => {
+    :omniauth_callbacks => 'users/omniauth_callbacks'
+  }
+  devise_scope :user do
+    get '/users/auth/:provider' => 'users/omniauth_callbacks#passthru'
+  end
+
+  root :to => "home#index"
+  match '/error', :to => 'home#error', :as => 'error'
+  #handling people who give us invalid routes
+  match '*a', :to => 'home#error'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

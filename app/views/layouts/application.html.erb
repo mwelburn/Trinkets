@@ -5,10 +5,18 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <!-- used for responsive bootstrap -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%= render 'layouts/google_analytics' %>
 </head>
 <body>
+  <%= render 'layouts/navbar' %>
 
-<%= yield %>
+  <div id="container" class="container-fluid center">
+    <%= yield %>
+  </div>
 
+  <%= render 'layouts/footer' %>
+  <%= debug(params) if Rails.env.development? %>
 </body>
 </html>

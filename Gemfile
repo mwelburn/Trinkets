@@ -2,37 +2,41 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.8'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-gem 'sqlite3'
-
-
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
-
-  gem 'uglifier', '>= 1.0.3'
-end
-
+gem 'devise', '~> 2.1'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 gem 'jquery-rails'
 
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+#gem 'cancan'
+#gem 'paperclip'
+#gem "paperclip-aws", "~> 1.6.6"
+#gem 'aws-s3', :require => 'aws/s3'
+#gem 'aws-sdk', '~> 1.3.4'
 
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
+group :assets do
+  gem 'sass-rails',   '~> 3.2'
+  #gem 'coffee-rails', '~> 3.2.1'
+  gem 'bootstrap-sass', '~> 2.2.1.0'
+end
 
-# Use unicorn as the app server
-# gem 'unicorn'
+group :development do
+  gem 'sqlite3'
+  gem 'debugger'
+  gem 'rspec-rails'
+  gem 'faker'
+end
 
-# Deploy with Capistrano
-# gem 'capistrano'
+group :test do
+  # Pretty printed test output
+  gem 'turn', :require => false
+  
+  gem 'rspec'
+  gem 'webrat'
+  gem 'factory_girl_rails', '~> 4.0'
+end
 
-# To use debugger
-# gem 'debugger'
+group :production do
+  gem 'heroku'
+  gem 'pg'
+  gem 'thin'
+end
