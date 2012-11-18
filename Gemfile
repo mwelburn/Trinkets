@@ -6,6 +6,7 @@ gem 'devise', '~> 2.1'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'jquery-rails'
+#gem 'will_paginate', '~> 3.0'
 
 #gem 'cancan'
 #gem 'paperclip'
@@ -17,6 +18,7 @@ group :assets do
   gem 'sass-rails',   '~> 3.2'
   #gem 'coffee-rails', '~> 3.2.1'
   gem 'bootstrap-sass', '~> 2.2.1.0'
+  gem 'bootstrap-datepicker-rails'
 end
 
 group :development do

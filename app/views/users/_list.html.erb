@@ -1,0 +1,14 @@
+<ul id="trinkets_list">
+	<% trinkets.each do |trinket| %>
+		<li<% if trinkets.first == trinket %> class="first"<% end %>>
+			<div class="trinket_message_container">
+				<%= h link_to trinket.name, user_trinket_path(trinket.user, trinket) %>
+				<%= h trinket.description %>
+				<div class="time_ago">
+					<%= trinket.date_acquired %>
+				</div>
+			</div>
+			<div class="clear"></div>
+		 </li>
+	<% end %>
+</ul>

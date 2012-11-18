@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :authentication_keys => [:login]
 
-  has_many :events, :dependent => :destroy
+  has_many :trinkets, :dependent => :destroy
 
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'

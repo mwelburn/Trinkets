@@ -1,0 +1,86 @@
+@import "bootstrap";
+@import "bootstrap-responsive";
+
+#container {
+  padding-top: 60px;
+}
+
+.footer {
+  margin-top: 45px;
+  padding: 20px 20px 20px;
+  border-top: 1px solid #000;
+}
+
+.facebook-login {
+  vertical-align: bottom;
+  display: inline-block;
+  width: 150px;
+  height: 23px;
+  background: url('facebook_signin.png') no-repeat top;
+}
+
+.twitter-login {
+  vertical-align: bottom;
+  display: inline-block;
+  width: 151px;
+  height: 24px;
+  background: url('sign-in-with-twitter-d.png') no-repeat top;
+}
+
+.facebook-login:active {
+  background: url('facebook_signin.png') no-repeat bottom;
+}
+
+.clear {
+	clear: both;
+	height: 0;
+	overflow: hidden;
+}
+
+/* TRINKETS LIST */
+#trinkets_list {
+	margin: 0px;
+	padding: 0px;
+	width: 521px;
+}
+#trinkets_list li {
+	list-style: none;
+	padding: 10px 0px;
+	margin: 0px;
+	background-color: #FFFFFF;
+	border-bottom: 1px dashed #D2DADA;
+}
+#trinkets_list li.first {
+	border-top: 1px dashed #D2DADA;
+}
+#trinkets_list li:hover {
+	background-color: #F7F7F7;
+}
+#trinkets_list li img {
+	float: left;
+}
+#trinkets_list li div.trinket_message_container {
+	float: left;
+	margin-left: 10px;
+    word-wrap: break-word;
+    width: 450px; /*need to set this to force line break */
+}
+#trinkets_list li div.trinket_message_container h3 {
+    margin: 0px;
+    font-size: 16px;
+}
+#trinkets_list li div.button_container {
+    float: right;
+    width: 85px;
+}
+
+#trinkets_list li div.trinket_message_container a {
+	color: #2276BB;
+	text-decoration: none;
+	font-weight: bold;
+}
+#trinkets_list li div.trinket_message_container div.time_ago {
+	color: #9C9C9C;
+	font-size: 90%;
+	padding-top: 3px;
+}

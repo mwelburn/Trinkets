@@ -1,0 +1,50 @@
+<%= form_for(@trinket, :url => user_trinket_path(@user, @trinket), :html => { :class => "form-horizontal" }) do |f| %>
+
+  <fieldset>
+    <div class="control-group">
+      <%= f.label :name, :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :name %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :description, :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_area :description %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :serial_number, :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :serial_number %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :date_acquired, :class => "control-label" %>
+      <div class="controls">
+        <%= f.date_select :date_acquired %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :original_value, :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :original_value %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :current_value, :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :current_value %>
+      </div>
+    </div>
+
+    <div>
+      <%= f.submit "Submit", :class => "btn btn-primary" %>
+    </div>
+  </fieldset>
+<% end %>

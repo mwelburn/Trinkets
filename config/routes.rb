@@ -6,6 +6,10 @@ Trinkets::Application.routes.draw do
     get '/users/auth/:provider' => 'users/omniauth_callbacks#passthru'
   end
 
+  resources :users, :only => [ :show ] do
+    resources :trinkets
+  end
+
   root :to => "home#index"
   match '/error', :to => 'home#error', :as => 'error'
   #handling people who give us invalid routes
