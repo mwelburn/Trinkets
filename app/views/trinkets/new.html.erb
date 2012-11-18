@@ -1,6 +1,6 @@
 <div class="row-fluid">
   <div class="span6 offset3">
     <h2>New Trinket</h2>
-    <%= render 'form' %>
+    <%= render 'form', :resource => @trinket, :resource_name => user_trinket_path(@user, @trinket) %>
   </div>
 </div>
