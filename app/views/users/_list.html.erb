@@ -1,9 +1,17 @@
 <ul id="trinkets_list">
 	<% trinkets.each do |trinket| %>
 		<li<% if trinkets.first == trinket %> class="first"<% end %>>
-			<div class="trinket_message_container">
-				<%= h link_to trinket.name, user_trinket_path(trinket.user, trinket) %>
-				<%= h trinket.description %>
+      <% if !(trinket.attachment.content_type =~ /^image/).nil? %>
+        <%= image_tag trinket.attachment.url(:thumb) %>
+      <% else %>
+        <%= image_tag "/default-thumb.png" %>
+      <% end %>
+      <div class="trinket_message_container">
+        <%= h link_to trinket.name, user_trinket_path(trinket.user, trinket) %>
+				<%= h link_to "(Edit)", edit_user_trinket_path(trinket.user, trinket) %>
+        <div>
+          <%= h trinket.description %>
+        </div>
 				<div class="time_ago">
 					<%= trinket.date_acquired %>
 				</div>

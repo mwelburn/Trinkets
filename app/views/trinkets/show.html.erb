@@ -1,1 +1,36 @@
-<%= @trinket %>
+<%= link_to "Edit", edit_user_trinket_path(@user, @trinket), :class => "btn" %>
+
+<h3>
+  <%= @trinket.name %>
+</h3>
+<div id="info-description">
+  <%= @trinket.description %>
+</div>
+<div id="info-serialnumber">
+  <%= @trinket.serial_number %>
+</div>
+<div id="info-dateaquired">
+  <%= @trinket.date_acquired %>
+</div>
+<div class="control-group">
+  <label for="serial-number" class="control-label">
+    Serial Number
+  </label>
+  <div class="controls">
+    <input type="text" disabled="true">
+        <%= @trinket.serial_number %>
+    </input>
+  </div>
+</div>
+<div id="info-currentvalue">
+  <%= @trinket.current_value %>
+</div>
+<% if @trinket.attachment.exists? %>
+  <div id="info-attachment">
+    <% if !(@trinket.attachment.content_type =~ /^image/).nil? %>
+      <%= image_tag @trinket.attachment.url(:medium) %>
+    <% else %>
+      <%= image_tag "/default-image.png" %>
+    <% end %>
+  </div>
+<% end %>

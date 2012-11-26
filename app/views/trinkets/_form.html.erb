@@ -1,47 +1,61 @@
-<fieldset>
-  <div class="control-group">
-    <%= f.label :name, :class => "control-label" %>
-    <div class="controls">
-      <%= f.text_field :name %>
+<%= form_for(resource, :html => { :class => "form-horizontal", :multipart => true }) do |f| %>
+  <fieldset>
+    <div class="control-group">
+      <%= f.label :name, :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :name %>
+      </div>
     </div>
-  </div>
 
-  <div class="control-group">
-    <%= f.label :description, :class => "control-label" %>
-    <div class="controls">
-      <%= f.text_area :description %>
+    <div class="control-group">
+      <%= f.label :description, :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_area :description %>
+      </div>
     </div>
-  </div>
 
-  <div class="control-group">
-    <%= f.label :serial_number, :class => "control-label" %>
-    <div class="controls">
-      <%= f.text_field :serial_number %>
+    <div class="control-group">
+      <%= f.label :serial_number, :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :serial_number %>
+      </div>
     </div>
-  </div>
 
-  <div class="control-group">
-    <%= f.label :date_acquired, :class => "control-label" %>
-    <div class="controls">
-      <%= f.date_select :date_acquired %>
+    <div class="control-group">
+      <%= f.label :date_acquired, :class => "control-label" %>
+      <div class="controls">
+        <%= f.date_select :date_acquired %>
+      </div>
     </div>
-  </div>
 
-  <div class="control-group">
-    <%= f.label :original_value, :class => "control-label" %>
-    <div class="controls">
-      <%= f.text_field :original_value %>
+    <div class="control-group">
+      <%= f.label :quantity, :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :quantity %>
+      </div>
     </div>
-  </div>
 
-  <div class="control-group">
-    <%= f.label :current_value, :class => "control-label" %>
-    <div class="controls">
-      <%= f.text_field :current_value %>
+    <div class="control-group">
+      <%= f.label :current_value, :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :current_value %>
+      </div>
     </div>
-  </div>
 
-  <div>
-    <%= f.submit "Submit", :class => "btn btn-primary" %>
-  </div>
-</fieldset>
+    <!-- TODO: show existing image if exists? -->
+    <!-- TODO: allow removal of image -->
+    <!-- TODO: if not an image, do something else?? -->
+
+    <div class="control-group">
+      <%= f.label :attachment, :class => "control-label" %>
+      <div class="controls">
+        <%= f.file_field :attachment %>
+      </div>
+    </div>
+
+    <div>
+      <%= f.submit "Submit", :class => "btn btn-primary" %>
+      <%= link_to "Cancel", cancel_path, :class => "btn" %>
+    </div>
+  </fieldset>
+<% end %>

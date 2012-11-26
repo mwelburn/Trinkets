@@ -5,7 +5,7 @@ class CreateTrinkets < ActiveRecord::Migration
       t.text :name, :null => false
       t.text :description, :default => ""
       t.date :date_acquired
-      t.integer :original_value
+      t.integer :quantity
       t.integer :current_value
       t.text :serial_number, :default => ""
 
@@ -16,8 +16,10 @@ class CreateTrinkets < ActiveRecord::Migration
     add_index :trinkets, :name
     add_index :trinkets, :description
     add_index :trinkets, :date_acquired
-    add_index :trinkets, :original_value
+    add_index :trinkets, :quantity
     add_index :trinkets, :current_value
     add_index :trinkets, :serial_number
+
+    add_attachment :trinkets, :attachment
   end
 end

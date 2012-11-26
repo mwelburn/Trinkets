@@ -20,7 +20,7 @@ class TrinketsController < ApplicationController
   end
 
   def new
-    @trinket = @user.trinkets.new
+    @trinket = @user.trinkets.build
   end
 
   def edit
@@ -43,7 +43,7 @@ class TrinketsController < ApplicationController
       @trinket.description = req["trinket"]["description"] unless req["trinket"]["description"].nil?
       @trinket.serial_number = req["trinket"]["serial_number"] unless req["trinket"]["serial_number"].nil?
       @trinket.date_acquired = req["trinket"]["date_acquired"] unless req["trinket"]["date_acquired"].nil?
-      @trinket.original_value = req["trinket"]["original_value"] unless req["trinket"]["original_value"].nil?
+      @trinket.quantity = req["trinket"]["quantity"] unless req["trinket"]["quantity"].nil?
       @trinket.current_value = req["trinket"]["current_value"] unless req["trinket"]["current_value"].nil?
 
       @trinket.save!
