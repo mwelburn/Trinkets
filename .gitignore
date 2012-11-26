@@ -44,5 +44,8 @@ doc/
 /db/schema.rb
 /spec/webrat.log
 
+# ignore development image uploads
+/public/system
+
 # Environment variables
 /config/heroku_env.rb
