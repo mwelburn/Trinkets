@@ -7,7 +7,9 @@ Trinkets::Application.routes.draw do
   end
 
   resources :users, :only => [ :show ] do
-    resources :trinkets
+    resources :trinkets do
+      resources :trinket_attachments, :only => [ :create, :update, :destroy ]
+    end
   end
 
   root :to => "home#index"

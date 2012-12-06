@@ -3,14 +3,14 @@
     <div class="control-group">
       <%= f.label :name, :class => "control-label" %>
       <div class="controls">
-        <%= f.text_field :name %>
+        <%= f.text_field :name, :id => "trinket-name" %>
       </div>
     </div>
 
     <div class="control-group">
       <%= f.label :description, :class => "control-label" %>
       <div class="controls">
-        <%= f.text_area :description %>
+        <%= f.text_area :description, :class => "long-textarea" %>
       </div>
     </div>
 
@@ -21,10 +21,12 @@
       </div>
     </div>
 
-    <div class="control-group">
-      <%= f.label :date_acquired, :class => "control-label" %>
+    <div id="datepicker-control-group" class="control-group">
+      <%= f.label :date_acquired, "Date Acquired", :class => "control-label" %>
       <div class="controls">
-        <%= f.date_select :date_acquired %>
+        <%= f.text_field :date_acquired, :id => "datepicker-entry" %>
+        <br/>
+        <span class="help-inline">Please use format YYYY-MM-DD</span>
       </div>
     </div>
 
@@ -36,26 +38,112 @@
     </div>
 
     <div class="control-group">
-      <%= f.label :current_value, :class => "control-label" %>
+      <%= f.label :current_value, "Current Value", :class => "control-label" %>
       <div class="controls">
         <%= f.text_field :current_value %>
       </div>
     </div>
 
-    <!-- TODO: show existing image if exists? -->
-    <!-- TODO: allow removal of image -->
-    <!-- TODO: if not an image, do something else?? -->
-
-    <div class="control-group">
-      <%= f.label :attachment, :class => "control-label" %>
-      <div class="controls">
-        <%= f.file_field :attachment %>
-      </div>
-    </div>
-
-    <div>
-      <%= f.submit "Submit", :class => "btn btn-primary" %>
+    <div class="form-buttons">
+      <%= f.submit "Submit", :id => 'submit-btn', :class => "btn btn-primary" %>
       <%= link_to "Cancel", cancel_path, :class => "btn" %>
+      <% if delete_enabled %>
+        <a id="delete-<%= @trinket.id %>" href="#" class="btn btn-danger delete-btn">Delete</a>
+      <% end %>
     </div>
   </fieldset>
 <% end %>
+
+<script type="text/javascript">
+  var j$ = jQuery.noConflict();
+
+  var j$datepickerEntry;
+  var j$datepickerControlGroup;
+  var j$submitBtn;
+  var j$trinketName;
+
+  j$(function(){
+    j$datepickerControlGroup = j$('#datepicker-control-group');
+    j$submitBtn = j$('#submit-btn');
+    j$trinketName = j$('#trinket-name');
+
+    if (j$trinketName.val() == '')
+    {
+      j$submitBtn.attr('disabled', true);
+    }
+
+    j$trinketName.blur(function(e)
+    {
+      if (j$trinketName.val() == '')
+      {
+        j$submitBtn.attr('disabled', true);
+      }
+      else
+      {
+        j$submitBtn.removeAttr('disabled');
+      }
+    });
+
+    j$datepickerEntry = j$('#datepicker-entry').datepicker(
+    {
+      format: 'yyyy-mm-dd',
+      autoclose: true
+    });
+
+    j$datepickerEntry.blur(function(e)
+    {
+      //validate the formatting is right
+      var dateValue = j$datepickerEntry.val();
+      if (dateValue == '' || dateValue.match(/^(\d{4})\-(\d{1,2})\-(\d{1,2})$/))
+      {
+        j$datepickerControlGroup.removeClass('error');
+        j$submitBtn.removeAttr('disabled');
+      }
+      else
+      {
+        j$datepickerControlGroup.addClass('error');
+        j$submitBtn.attr('disabled', true);
+      }
+    })
+
+    j$('.delete-btn').click(function(e)
+    {
+      var result = confirm("Are you sure you want to delete?");
+      if (result)
+      {
+        var id = j$(this).attr('id');
+        if (id != null)
+        {
+          //parse id to remove the 'delete-' prefix
+          var parsedId = id.substring(7);
+
+          j$.ajax(
+          {
+            type: "DELETE",
+            url: "/users/<%= @user.id %>/trinkets/" + parsedId + ".json",
+            success: function(msg)
+            {
+              window.url("/users/<%= @user.id %>");
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+              var responseText = j$.parseJSON(jqXHR.responseText);
+
+              var errorText = "Trinket could not be deleted";
+              if (responseText != null && responseText.errors != null)
+              {
+                //more specific error
+                errorText = "Trinket could not be deleted due to:\n";
+                for (var i = 0; i < responseText.errors.length; i++)
+                {
+                  errorText += "\n" + responseText.errors[i];
+                }
+              }
+              alert(errorText);
+            }
+          });
+        }
+      }
+    });
+  });
+</script>

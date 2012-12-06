@@ -1,0 +1,97 @@
+<div class="accordion" id="accordion2" xmlns="http://www.w3.org/1999/html">
+  <% trinkets.each do |trinket| %>
+  <div class="accordion-group" id="accordion-<%= trinket.id %>">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse<%= trinket.id %>">
+        <span class="list-header" rel="tooltip" data-placement="right" title="Click for more information!">
+          <%= trinket.name %>
+        </span>
+      </a>
+      <div>
+    </div>
+    <div id="collapse<%= trinket.id %>" class="accordion-body collapse <% if trinkets.first == trinket %>in<% end %>">
+      <div class="accordion-inner">
+        <% if !trinket.description.blank? %>
+          <div class="description"><%= trinket.description %></div>
+        <% end %>
+        <% if !trinket.serial_number.blank? %>
+          <div>Serial Number: <%= trinket.serial_number %></div>
+        <% end %>
+        <% if !trinket.date_acquired.blank? %>
+          <div>Date Acquired: <%= trinket.date_acquired %></div>
+        <% end %>
+        <% if !trinket.quantity.blank? and trinket.quantity > 0 %>
+          <div>Quantity: <%= trinket.quantity %></div>
+        <% end %>
+        <% if !trinket.current_value.blank? %>
+          <div>Value (per item): <%= trinket.current_value %></div>
+        <% end %>
+        <div class="button-group">
+          <%= link_to "View", user_trinket_path(trinket.user, trinket), :class => "btn btn-small" %>
+          <%= link_to "Edit", edit_user_trinket_path(trinket.user, trinket), :class => "btn btn-small" %>
+          <a id="delete-<%= trinket.id %>" href="#" class="btn btn-danger btn-small delete-btn">Delete</a>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+</div>
+
+<script type="text/javascript">
+  var j$ = jQuery.noConflict();
+
+  j$(function()
+  {
+    //incase the data attributes don't take...
+    j$('.list-header').tooltip(
+    {
+      placement: 'right'
+    });
+
+    j$('.delete-btn').click(function(e)
+    {
+      var result = confirm("Are you sure you want to delete?");
+      if (result)
+      {
+        var id = j$(this).attr('id');
+        if (id != null)
+        {
+          //parse id to remove the 'delete-' prefix
+          var parsedId = id.substring(7);
+
+          j$.ajax(
+          {
+            type: "DELETE",
+            url: "/users/<%= @user.id %>/trinkets/" + parsedId + ".json",
+            success: function(msg)
+            {
+              var j$accordionItem = j$('#accordion-' + parsedId);
+
+              if (j$accordionItem != null)
+              {
+                j$accordionItem.slideUp();
+              }
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+              var responseText = j$.parseJSON(jqXHR.responseText);
+
+              var errorText = "Trinket could not be deleted";
+              if (responseText != null && responseText.errors != null)
+              {
+                //more specific error
+                errorText = "Trinket could not be deleted due to:\n";
+                for (var i = 0; i < responseText.errors.length; i++)
+                {
+                  errorText += "\n" + responseText.errors[i];
+                }
+              }
+              alert(errorText);
+            }
+          });
+        }
+      }
+    });
+  });
+</script>

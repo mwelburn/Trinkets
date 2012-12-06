@@ -1,4 +1,4 @@
-<div class="row-fluid">
+<div class="row-fluid" xmlns="http://www.w3.org/1999/html">
   <div class="span6 offset3">
     <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
@@ -22,7 +22,10 @@
             <div class="control-group">
               <%= f.label :email, :class => "control-label" %>
               <div class="controls">
-                <%= f.email_field :email %>
+                <%= f.email_field :email, :id => "email" %>
+                <div id="email-suggestion" class="form-help-text">
+                  Did you mean <a id="email-change" class="email"><span id="email-address" class="address"></span></a>?
+                </div>
               </div>
             </div>
 
@@ -30,9 +33,9 @@
               <%= f.label :password, :class => "control-label" %>
               <div class="controls">
                 <%= f.password_field :password %>
-                <p class="help-block">
-                  <i>(leave blank if you don't want to change it)</i>
-                </p>
+                <div class="form-help-text">
+                  (leave blank if you don't want to change it)
+                </div>
               </div>
             </div>
 
@@ -47,9 +50,9 @@
             <%= f.label :current_password, :class => "control-label" %>
             <div class="controls">
               <%= f.password_field :current_password %>
-              <p class="help-block">
-                <i>(we need your current password to confirm your changes)</i>
-              </p>
+              <div class="form-help-text">
+                (we need your current password to confirm your changes)
+              </div>
             </div>
           </div>
 
@@ -63,3 +66,5 @@
     <!-- <%= link_to "Back", :back %> -->
   </div>
 </div>
+
+<%= render :partial => "mailcheck_js" %>

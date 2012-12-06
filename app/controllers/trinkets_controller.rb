@@ -13,9 +13,10 @@ class TrinketsController < ApplicationController
   end
 
   def show
+    @trinket_attachments = @trinket.trinket_attachments
     respond_to do |format|
       format.html
-      format.json { render :json => { :trinket => @trinket } }
+      format.json { render :json => { :trinket => @trinket, :trinket_attachments => @trinket_attachments } }
     end
   end
 
@@ -55,10 +56,9 @@ class TrinketsController < ApplicationController
 =end
   def create
     @trinket = @user.trinkets.build(params[:trinket])
-    begin
-      @trinket.save!
+    if @trinket.save
       redirect_to user_trinket_path(@user, @trinket), :flash => { :success => "Trinket created" }
-    rescue
+    else
       render :new
     end
   end
@@ -79,11 +79,11 @@ class TrinketsController < ApplicationController
     name = @trinket.name
 
     respond_to do |format|
-      begin
-        @trinket.destroy!
+      @trinket.destroy
+      if @trinket.errors.empty?
         format.html { redirect_to root_path, :flash => { :success => "#{name} deleted" } }
-        format.json { render :json => { :status => 200 } }
-      rescue
+        format.json { render :json => {}, :status => 200 }
+      else
         format.html { redirect_to user_trinket_path(@user, @trinket), :flash => { :failure => "Error deleting trinket"} }
         format.json { render :json => { :errors => @trinket.errors.full_messages }, :status => 422 }
       end

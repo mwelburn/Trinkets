@@ -1,0 +1,67 @@
+<div id="add-attachment-modal" class="modal hide fade">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">&times;</a>
+    <h3>Add Attachment</h3>
+  </div>
+  <%= form_for(resource, :html => { :class => "form-horizontal", :multipart => true }) do |f| %>
+  <div class="modal-body">
+      <fieldset>
+        <div class="control-group">
+          <%= f.label :attachment, :class => "control-label" %>
+          <div class="controls">
+            <%= f.file_field :attachment, :id => "attachment-file" %>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= f.label :description, :class => "control-label" %>
+          <div class="controls">
+            <%= f.text_area :description, :class => "short-textarea" %>
+          </div>
+        </div>
+      </fieldset>
+  </div>
+  <div class="modal-footer">
+    <%= f.submit "Add", :id => "add-attachment-btn", :class => "btn btn-primary" %>
+    <%= f.button "Add", :id => "hidden-add-attachment-btn", :class => "btn btn-primary" %>
+  </div>
+    <% end %>
+</div>
+
+<script type="text/javascript">
+  var j$ = jQuery.noConflict();
+
+  j$(function()
+  {
+    var j$AddAttachmentBtn = j$('#add-attachment-btn');
+    var j$HiddenAddAttachmentBtn = j$('#hidden-add-attachment-btn');
+    var j$AttachmentFile = j$('#attachment-file');
+
+    //initially disable button
+    j$AddAttachmentBtn.attr("disabled", true);
+
+    //second button does nothing, but is a standin after submission to feign disabled
+    j$HiddenAddAttachmentBtn.attr("disabled", true);
+    j$HiddenAddAttachmentBtn.hide();
+
+    j$AttachmentFile.change(function(e)
+    {
+      //disable submit button unless an attachment is provided
+      var filename = j$AttachmentFile.val();
+      if (filename == "")
+      {
+        j$AddAttachmentBtn.attr("disabled", true);
+      }
+      else
+      {
+        j$AddAttachmentBtn.removeAttr("disabled");
+      }
+    });
+
+    j$AddAttachmentBtn.click(function(e)
+    {
+      //TODO - some sort of loading gif would be nice
+      j$AddAttachmentBtn.hide();
+      j$HiddenAddAttachmentBtn.show();
+    });
+  });
+</script>

@@ -1,3 +1,9 @@
-<%= link_to "New Trinket", new_user_trinket_path(@user), :class => :btn %>
-
-<%= render :partial => "list", :locals => {:trinkets => @trinkets } %>
+<div class="row-fluid">
+  <div class="span8 offset2">
+    <div class="center-align">
+      <%= link_to "Add a new Trinket", new_user_trinket_path(@user), :class => "btn btn-primary btn-large" %>
+    </div>
+    <br/>
+    <%= render :partial => "accordion", :locals => {:trinkets => @trinkets } %>
+  </div>
+</div>

@@ -14,4 +14,6 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require bootstrap-datepicker/core
+//= require mailcheck.min
+//= require lightbox
 //= require_tree .

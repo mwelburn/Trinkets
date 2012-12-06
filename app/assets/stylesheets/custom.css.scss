@@ -37,7 +37,28 @@
 	overflow: hidden;
 }
 
+.center-align {
+  text-align: center;
+}
+
+/* ACCORDION */
+.accordion-inner .description
+{
+  margin: 10px 0px;
+}
+
+.accordion-inner .button-group
+{
+  margin-top: 10px;
+}
+
 /* TRINKETS LIST */
+.list-header
+{
+  font-size: 20px;
+  font-weight: bold;
+}
+
 #trinkets_list {
 	margin: 0px;
 	padding: 0px;
@@ -83,4 +104,63 @@
 	color: #9C9C9C;
 	font-size: 90%;
 	padding-top: 3px;
+}
+
+/* FORM FIELDS */
+
+.form-header
+{
+  text-align: center;
+  width: 100%;
+}
+
+.form-help-text {
+  color: #a9a9a9;
+  font-style: italic;
+}
+
+.form-buttons {
+  text-align: center;
+}
+
+textarea {
+  resize: none;
+}
+/*
+.form-help-text
+{
+  color: #747474;
+  font-style: italic;
+  margin-top: 3px;
+}
+*/
+a#email-change:hover {
+  cursor: pointer;
+}
+
+.short-textarea
+{
+  height: 150px;
+}
+
+.long-textarea
+{
+  height: 300px;
+}
+
+.thumbnail-img img
+{
+  border: 1px solid black;
+  margin: 5px;
+}
+
+.show-information
+{
+  margin: 10px 100px 10px 100px;
+}
+
+.show-label
+{
+  font-weight: bold;
+  margin-top: 10px;
 }

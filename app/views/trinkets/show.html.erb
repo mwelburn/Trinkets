@@ -1,36 +1,90 @@
-<%= link_to "Edit", edit_user_trinket_path(@user, @trinket), :class => "btn" %>
-
-<h3>
-  <%= @trinket.name %>
-</h3>
-<div id="info-description">
-  <%= @trinket.description %>
-</div>
-<div id="info-serialnumber">
-  <%= @trinket.serial_number %>
-</div>
-<div id="info-dateaquired">
-  <%= @trinket.date_acquired %>
-</div>
-<div class="control-group">
-  <label for="serial-number" class="control-label">
-    Serial Number
-  </label>
-  <div class="controls">
-    <input type="text" disabled="true">
-        <%= @trinket.serial_number %>
-    </input>
-  </div>
-</div>
-<div id="info-currentvalue">
-  <%= @trinket.current_value %>
-</div>
-<% if @trinket.attachment.exists? %>
-  <div id="info-attachment">
-    <% if !(@trinket.attachment.content_type =~ /^image/).nil? %>
-      <%= image_tag @trinket.attachment.url(:medium) %>
-    <% else %>
-      <%= image_tag "/default-image.png" %>
+<div class="row-fluid">
+  <div class="span8 offset2">
+    <h2 class="form-header">
+      <%= @trinket.name %>
+    </h2>
+    <% if !@trinket.errors.empty? %>
+      <div class="error_messages">
+        <h2>Invalid Fields</h2>
+        <p>Correct the following errors and try again.</p>
+        <ul>
+          <% @trinket.errors.full_messages.each do |error_msg| %>
+            <li><%= error_msg %></li>
+          <% end %>
+        </ul>
+      </div>
     <% end %>
+    <div class="center-align">
+      <%= link_to "Edit", edit_user_trinket_path(@user, @trinket), :class => "btn" %>
+      <a href="#add-attachment-modal" data-toggle="modal" class="btn">Add Attachment</a>
+      <!-- TODO - delete btn -->
+    </div>
+    <div class="show-information">
+      <div class="show-label">
+        Description:
+      </div>
+      <div>
+        <%= @trinket.description %>
+      </div>
+      <div class="show-label">
+      Serial Number:
+      </div>
+      <div>
+        <%= @trinket.serial_number %>
+      </div>
+      <div class="show-label">
+      Date Acquired:
+      </div>
+      <div>
+        <%= @trinket.date_acquired %>
+      </div>
+      <div class="show-label">
+      Quantity:
+      </div>
+      <div>
+        <%= @trinket.quantity %>
+      </div>
+      <div class="show-label">
+      Current Value:
+      </div>
+      <div>
+        <%= @trinket.current_value %>
+      </div>
+    </div>
+    <!-- TODO: add delete ability for images/attachments -->
+    <h4 class="center-align">Images:</h4>
+    <div class="center-align">
+      <% image_exists = false %>
+      <% @trinket_attachments.each do |attachment| %>
+        <% if !(attachment.attachment_content_type =~ /^image/).nil? %>
+          <% image_exists = true %>
+          <span>
+            <!-- TODO - add a link to explicitly get the full size image -->
+            <%= link_to (image_tag attachment.attachment.url(:thumb)), attachment.attachment.url(:large), {:class => "thumbnail-img", :rel => "lightbox[image]", :title => attachment.description } %>
+          </span>
+        <% end %>
+      <% end %>
+      <% if !image_exists %>
+        None
+      <% end %>
+    </div>
+    <br/>
+    <h4 class="center-align">Attachments:</h4>
+    <div class="center-align">
+      <% nonimage_exists = false %>
+      <% @trinket_attachments.each do |attachment| %>
+        <% if (attachment.attachment_content_type =~ /^image/).nil? %>
+          <% nonimage_exists = true %>
+          <div>
+            <%= link_to attachment.attachment_file_name, attachment.attachment.url %>
+          </div>
+        <% end %>
+      <% end %>
+      <% if !nonimage_exists %>
+        None
+      <% end %>
+    </div>
   </div>
-<% end %>
+</div>
+
+<%= render 'attachment_form', :resource => [@user, @trinket, @trinket.trinket_attachments.build]%>

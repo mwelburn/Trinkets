@@ -8,13 +8,19 @@
   <!-- used for responsive bootstrap -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= render 'layouts/google_analytics' %>
+  <%= yield :javascript %>
 </head>
 <body data-spy="scroll">
   <%= render 'layouts/navbar' %>
 
   <div id="container" class="container-fluid center">
+    <!--
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, :id => "flash_#{name}" %>
+    <% end %>
+    -->
     <%= yield %>
   </div>
 

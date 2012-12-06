@@ -1,6 +1,17 @@
 <div class="row-fluid">
   <div class="span6 offset3">
-    <h2>New Trinket</h2>
+    <h2 class="form-header">New Trinket</h2>
+    <% if !@trinket.errors.empty? %>
+      <div class="error_messages">
+        <h2>Invalid Fields</h2>
+        <p>Correct the following errors and try again.</p>
+        <ul>
+          <% @trinket.errors.full_messages.each do |error_msg| %>
+            <li><%= error_msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
     <%= render 'form', :resource => [@user, @trinket], :cancel_path => @user %>
   </div>
 </div>
