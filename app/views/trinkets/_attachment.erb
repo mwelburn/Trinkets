@@ -1,0 +1,126 @@
+<!-- TODO: show existing image if exists? -->
+<!-- TODO: allow removal of image -->
+<!-- TODO: if not an image, do something else?? -->
+
+<div class="control-group">
+  <%= f.label :attachment, :class => "control-label" %>
+  <div class="controls">
+    <%= f.file_field :attachment %>
+  </div>
+</div>
+
+
+
+
+
+
+<div id="info-attachment">
+  <% if @trinket.attachment.exists? %>
+    <% if !(@trinket.attachment.content_type =~ /^image/).nil? %>
+      <%= link_to (image_tag @trinket.attachment.url(:medium)), @trinket.attachment.url %>
+    <% else %>
+      <%= link_to (image_tag "/assets/no-image.png"), @trinket.attachment.url %>
+    <% end %>
+  <% else %>
+    <%= image_tag "/assets/no-attachment.png" %>
+<% end %>
+</div>
+
+
+
+
+
+
+
+
+<a id="addImageModal" href="#addImageForm" role="button" class="btn">Add Image</a>
+
+<!-- Modal dialog for adding images -->
+<div id="addImageModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Add Image" aria-hidden="true">
+  <form id="addImageForm" enctype="multipart/form-data">
+    <fieldset>
+      <div class="control-group">
+        <label for="file-upload" class="control-label">
+          File
+        </label>
+        <div class="controls">
+          <input name="attachment" type="file" id="file-upload"/>
+        </div>
+      </div>
+      <div class="control-group">
+        <label for="file-description" class="control-label">
+          Description
+        </label>
+        <div class="controls">
+          <input name="description" type="textarea" id="file-description"/>
+        </div>
+      </div>
+      <div class="form-buttons">
+        <a id="file-submit-btn" href="#" class="btn btn-primary">Add</a>
+        <a id="file-cancel-btn" href="#" class="btn">Cancel</a>
+      </div>
+    </fieldset>
+  </form>
+</div>
+
+<script type="text/javascript">
+  var j$ = jQuery.noConflict();
+
+  var j$addImageModal;
+  var j$fileUpload;
+  var j$fileDescription;
+  var j$fileSubmitBtn;
+  var j$fileCancelBtn;
+
+  j$(function()
+  {
+    j$addImageModal = j$('#addImageModal');
+    j$fileUpload = j$('#file-upload');
+    j$fileDescription = j$('#file-description');
+    j$fileSubmitBtn = j$('#file-submit-btn');
+    j$fileCancelBtn = j$('#file-cancel-btn');
+
+    j$addImageModal.modal({
+      show: false
+    });
+    j$addImageModal.click(function(e)
+    {
+      j$fileUpload.val("");
+      j$fileDescription.val("");
+      j$addImageModal.modal('show');
+    });
+
+    j$fileCancelBtn.click(function(e)
+    {
+      j$addImageModal.modal('hide');
+    });
+
+    j$fileSubmitBtn.click(function(e)
+    {
+      if (j$fileUpload[0].files.length == 0)
+      {
+        alert("Please choose a file to upload");
+        return;
+      }
+
+      var formData = new FormData($("#addImageForm"));
+      j$.ajax({
+        url: '/users/<%= @user.id %>/trinkets/<% @trinket.id %>/trinket_attachments',
+        type: 'POST',
+        success: function(e)
+        {
+          console.log('SUCCESS', e);
+          j$addImageModal.modal('hide');
+        },
+        error: function(a, b, c)
+        {
+          console.log('FAILURE', a, b, c);
+        },
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false
+      })
+    });
+  });
+</script>
